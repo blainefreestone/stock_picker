@@ -4,12 +4,12 @@ def stock_picker(stock_prices)
     stock_prices.each_with_index.reduce(0) do |total_highest_gain, (element, index)|
         current_buying_price = stock_prices[index]
 
-        current_price_highest_gain = stock_prices[index..last_index].reduce(0) do |highest_gain, current_selling_price|
+        current_price_info = stock_prices[index..last_index].reduce(Array.new(2,0)) do |current_price_info, current_selling_price|
             net_gain = current_selling_price - current_buying_price
-            net_gain > highest_gain ? net_gain : highest_gain
+            net_gain > current_price_info[1] ? [current_selling_price,net_gain] : current_price_info
         end
 
-        current_price_highest_gain > total_highest_gain ? current_price_highest_gain : total_highest_gain
+        current_price_info[1] > total_highest_gain ? current_price_info[1] : total_highest_gain
     end
 end
 
